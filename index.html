@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RAFIX</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      font-size: 2rem;
+    }
+    body,
+    html {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    table {
+      border-spacing: 0.25rem;
+    }
+    td {
+      width: 4rem;
+      height: 4rem;
+      border: 5rem;
+      text-align: center;
+      border-radius: 0.25rem;
+    }
+    button {
+      border: none;
+      width: 4rem;
+      height: 4rem;
+      background: transparent;
+      color: #e0e3e6;
+      outline: none;
+    }
+    button:hover {
+      border-radius: 100%;
+      background: #f0f3f6;
+      color: #c0c3c6;
+    }
+    .red {
+      background: #D10869;
+    }
+    .yellow {
+      background: #FDCB5C;
+    }
+    .green {
+      background: #70C050;
+    }
+    .blue {
+      background: #3897F0;
+    }
+  </style>
+  <script type="text/javascript">
+    const red     = [ 1,  2,  3,  4 ];
+    const blue    = [ 5,  6,  7,  8 ];
+    const yellow  = [ 9, 10, 11, 12 ];
+    const green   = [13, 14, 15, 16 ];
+
+    const all = red.concat(blue).concat(yellow).concat(green)
+
+    const init = all.sort(() => Math.random() - 0.5);
+
+    const board = [
+      [  init[0],  init[1],  init[2],  init[3] ],
+      [  init[4],  init[5],  init[6],  init[7] ],
+      [  init[8],  init[9],  init[10], init[11] ],
+      [ init[12],  init[13], init[14], init[15] ]
+    ];
+
+    const test = () => {}
+
+    const arrayFromColumn = (column) => {
+      let arr = [
+        board[0][column],
+        board[1][column],
+        board[2][column],
+        board[3][column],
+      ];
+      return arr;
+    }
+
+    const newBoard = (column, arr) => {
+      board[0][column] = arr[0];
+      board[1][column] = arr[1];
+      board[2][column] = arr[2];
+      board[3][column] = arr[3];
+    }
+
+    const moveUp = (column) => {
+      let arr = arrayFromColumn(column - 1);
+      console.log("arr", arr);
+      let tmp = arr.shift();
+      arr.push(tmp);
+      console.log("arr", arr);
+      newBoard((column - 1), arr);
+      return board;
+    }
+
+    const moveDown = (column) => {
+      let arr = arrayFromColumn(column - 1);
+      console.log("arr", arr);
+      let tmp = arr.pop();
+      arr.unshift(tmp);
+      console.log("arr", arr);
+      newBoard((column - 1), arr);
+      return board;
+    }
+
+    const moveLeft = (row) => {
+      let arr = board[row - 1];
+      let tmp = arr.shift();
+      arr.push(tmp);
+      board[row - 1] = arr;
+      return board;
+    }
+
+    const moveRight = (row) => {
+      let arr = board[row - 1];
+      let tmp = arr.pop();
+      arr.unshift(tmp);
+      board[row - 1] = arr;
+      return board;
+    }
+
+    const slideUp1 = () => { moveUp(1); drawBoard(); }
+    const slideUp2 = () => { moveUp(2); drawBoard(); }
+    const slideUp3 = () => { moveUp(3); drawBoard(); }
+    const slideUp4 = () => { moveUp(4); drawBoard(); }
+
+    const slideDown1 = () => { moveDown(1); drawBoard(); }
+    const slideDown2 = () => { moveDown(2); drawBoard(); }
+    const slideDown3 = () => { moveDown(3); drawBoard(); }
+    const slideDown4 = () => { moveDown(4); drawBoard(); }
+
+    const slideLeft1 = () => { moveLeft(1); drawBoard(); }
+    const slideLeft2 = () => { moveLeft(2); drawBoard(); }
+    const slideLeft3 = () => { moveLeft(3); drawBoard(); }
+    const slideLeft4 = () => { moveLeft(4); drawBoard(); }
+
+    const slideRight1 = () => { moveRight(1); drawBoard(); }
+    const slideRight2 = () => { moveRight(2); drawBoard(); }
+    const slideRight3 = () => { moveRight(3); drawBoard(); }
+    const slideRight4 = () => { moveRight(4); drawBoard(); }
+
+    const paintCell = (cell) => {
+      if (red.includes(cell)) {
+        return "red";
+      };
+
+      if (yellow.includes(cell)) {
+        return "yellow";
+      };
+
+      if (green.includes(cell)) {
+        return "green";
+      };
+
+      if (blue.includes(cell)) {
+        return "blue";
+      };
+    }
+
+    const drawBoard = () => {
+      document.querySelector('#r1c1').className = paintCell(board[0][0]);
+      document.querySelector('#r1c2').className = paintCell(board[0][1]);
+      document.querySelector('#r1c3').className = paintCell(board[0][2]);
+      document.querySelector('#r1c4').className = paintCell(board[0][3]);
+      document.querySelector('#r2c1').className = paintCell(board[1][0]);
+      document.querySelector('#r2c2').className = paintCell(board[1][1]);
+      document.querySelector('#r2c3').className = paintCell(board[1][2]);
+      document.querySelector('#r2c4').className = paintCell(board[1][3]);
+      document.querySelector('#r3c1').className = paintCell(board[2][0]);
+      document.querySelector('#r3c2').className = paintCell(board[2][1]);
+      document.querySelector('#r3c3').className = paintCell(board[2][2]);
+      document.querySelector('#r3c4').className = paintCell(board[2][3]);
+      document.querySelector('#r4c1').className = paintCell(board[3][0]);
+      document.querySelector('#r4c2').className = paintCell(board[3][1]);
+      document.querySelector('#r4c3').className = paintCell(board[3][2]);
+      document.querySelector('#r4c4').className = paintCell(board[3][3]);
+    }
+  </script>
+</head>
+<body>
+  <table>
+    <tr id="r0">
+      <td></td>
+      <td id="c1u"><button onclick="slideUp1();">▲</button></td>
+      <td id="c2u"><button onclick="slideUp2();">▲</button></td>
+      <td id="c3u"><button onclick="slideUp3();">▲</button></td>
+      <td id="c4u"><button onclick="slideUp4();">▲</button></td>
+      <td></td>
+    </tr>
+    <tr id="r1">
+      <td id="c1l"><button onclick="slideLeft1()">◀</button></td>
+      <td id="r1c1" class="row1 col1"></td>
+      <td id="r1c2" class="row1 col2"></td>
+      <td id="r1c3" class="row1 col3"></td>
+      <td id="r1c4" class="row1 col4"></td>
+      <td id="c1r"><button onclick="slideRight1()">▶</button></td>
+    </tr>
+    <tr id="r2">
+      <td id="c2l"><button onclick="slideLeft2()">◀</button></td>
+      <td id="r2c1" class="row2 col1"></td>
+      <td id="r2c2" class="row2 col2"></td>
+      <td id="r2c3" class="row2 col3"></td>
+      <td id="r2c4" class="row2 col4"></td>
+      <td id="c2r"><button onclick="slideRight2()">▶</button></td>
+    </tr>
+    <tr id="r3">
+      <td id="c3l"><button onclick="slideLeft3()">◀</button></td>
+      <td id="r3c1" class="row3 col1"></td>
+      <td id="r3c2" class="row3 col2"></td>
+      <td id="r3c3" class="row3 col3"></td>
+      <td id="r3c4" class="row3 col4"></td>
+      <td id="c3r"><button onclick="slideRight3()">▶</button></td>
+    </tr>
+    <tr id="r4">
+      <td id="c4l"><button onclick="slideLeft4()">◀</button></td>
+      <td id="r4c1" class="row4 col1"></td>
+      <td id="r4c2" class="row4 col2"></td>
+      <td id="r4c3" class="row4 col3"></td>
+      <td id="r4c4" class="row4 col4"></td>
+      <td id="c4r"><button onclick="slideRight4()">▶</button></td>
+    </tr>
+    <tr id="r5">
+      <td></td>
+      <td id="c1d"><button onclick="slideDown1();">▼</button></td>
+      <td id="c2d"><button onclick="slideDown2();">▼</button></td>
+      <td id="c3d"><button onclick="slideDown3();">▼</button></td>
+      <td id="c4d"><button onclick="slideDown4();">▼</button></td>
+      <td></td>
+    </tr>
+  </table>
+
+  <script type="text/javascript">
+    drawBoard();
+  </script>
+</body>
+</html>
